@@ -15,7 +15,24 @@ export default defineEventHandler(async (event) => {
 
   try {
     const pokemonDetails = await P.getPokemonByName(id);
-    return pokemonDetails;
+
+    const abilities = await Promise.all(
+      pokemonDetails.abilities.map(async (ability) => {
+        const abilityDetails = await P.getAbilityByName(ability.ability.name);
+        return {
+          name: ability.ability.name,
+          description: abilityDetails.effect_entries.find(
+            (entry) => entry.language.name === "en"
+          )?.effect,
+        };
+      })
+    );
+
+    return {
+      ...pokemonDetails,
+      sprite: pokemonDetails.sprites.other["official-artwork"].front_default,
+      abilities,
+    };
   } catch (error) {
     return createError({
       statusCode: 500,
