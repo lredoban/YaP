@@ -5,6 +5,7 @@ const P = new Pokedex();
 
 export default defineEventHandler(async (event) => {
   const { id } = getQuery(event);
+  const locale = getHeader(event, "accept-language") ?? "en";
 
   if (!id) {
     return createError({
@@ -21,10 +22,10 @@ export default defineEventHandler(async (event) => {
       pokemonDetails.abilities.map(async (ability) => {
         const abilityDetails = await P.getAbilityByName(ability.ability.name);
         return {
-          name: getLanguageEntry(abilityDetails.names, "fr", "name"),
+          name: getLanguageEntry(abilityDetails.names, locale, "name"),
           description: getLanguageEntry(
             abilityDetails.effect_entries,
-            "fr",
+            locale,
             "effect"
           ),
         };
@@ -35,10 +36,10 @@ export default defineEventHandler(async (event) => {
     return {
       ...pokemonDetails,
       abilities,
-      name: getLanguageEntry(speciesRes.names, "fr", "name"),
+      name: getLanguageEntry(speciesRes.names, locale, "name"),
       flavor_text: getLanguageEntry(
         speciesRes.flavor_text_entries,
-        "fr",
+        locale,
         "flavor_text"
       ),
       speciesRes,
