@@ -1,4 +1,5 @@
 import Pokedex from "pokedex-promise-v2";
+import getLanguageEntry from "~/utils/getLanguageEntry";
 
 const P = new Pokedex();
 
@@ -20,17 +21,28 @@ export default defineEventHandler(async (event) => {
       pokemonDetails.abilities.map(async (ability) => {
         const abilityDetails = await P.getAbilityByName(ability.ability.name);
         return {
-          name: ability.ability.name,
-          description: abilityDetails.effect_entries.find(
-            (entry) => entry.language.name === "en"
-          )?.effect,
+          name: getLanguageEntry(abilityDetails.names, "fr", "name"),
+          description: getLanguageEntry(
+            abilityDetails.effect_entries,
+            "fr",
+            "effect"
+          ),
         };
       })
     );
+    const speciesRes = await P.getPokemonSpeciesByName(id);
 
     return {
       ...pokemonDetails,
       abilities,
+      name: getLanguageEntry(speciesRes.names, "fr", "name"),
+      flavor_text: getLanguageEntry(
+        speciesRes.flavor_text_entries,
+        "fr",
+        "flavor_text"
+      ),
+      speciesRes,
+      color: speciesRes.color.name,
     };
   } catch (error) {
     return createError({

@@ -22,6 +22,7 @@
       </div>
       <div class="mt-6">
         <div v-if="activeTab === 'details'">
+          <p>{{ pokemon.flavor_text }}</p><br>
           <p><strong>Height:</strong> {{ pokemon.height }}</p>
           <p><strong>Weight:</strong> {{ pokemon.weight }}</p>
           <p><strong>Base Experience:</strong> {{ pokemon.base_experience }}</p>
@@ -55,7 +56,7 @@
 <script setup>
 const { id } = useRoute().params
 const { data: pokemon } = await useFetch('/api/pokemon/details', { query: { id } })
-const tabs = ['abilities', 'details', 'sprites', 'stats' ]
+const tabs = ['details', 'abilities', 'sprites', 'stats' ]
 const activeTab = ref(tabs[0])
 </script>
 
