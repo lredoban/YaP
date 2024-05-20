@@ -1,8 +1,9 @@
 <template>
-  <div ref="container" class="relative w-full rounded-2xl p-6 text-center shadow-lg" :class="{ 'py-14': !showTitle }">
+  <div ref="container" class="relative w-full rounded-2xl p-6 text-center shadow-lg transition-colors duration-700 bg-gray-200"
+    :class="{ 'py-14': !showTitle }">
     <ClientOnly>
-      <img :src="sprite" :alt="pokemon.name + shiny && ' shiny'" class="mx-auto" @load="setBackgroundColor"
-        crossorigin="anonymous">
+      <NuxtImg :src="sprite" :alt="pokemon.name + shiny && ' shiny'" @load="setBackgroundColor" crossorigin="anonymous"
+        loading="lazy" />
     </ClientOnly>
     <template v-if="showTitle">
       <h2 class="text-lg font-bold mt-2 text-sky-950 capitalize">{{ pokemon.name }}</h2>
