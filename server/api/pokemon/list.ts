@@ -11,10 +11,11 @@ export default defineEventHandler(async (event) => {
         async (pokemon) => await P.getPokemonByName(pokemon.name)
       )
     );
-    return pokemons.map(({ name, sprites, id }) => ({
+    return pokemons.map(({ name, sprites, id, types }) => ({
       id,
       name,
-      sprite: sprites.other["official-artwork"].front_default,
+      sprites,
+      types
     }));
   } catch (error) {
     return createError({

@@ -2,6 +2,12 @@
 
 Yet Another Pokedex (YaP) is a simple Pokedex application built with Nuxt 3. This project aims to provide a user-friendly interface to explore and discover various Pokémon, their stats, abilities, and more.
 
+## Design
+
+General design from https://dribbble.com/shots/16833947-Mobile-Pokedex-App-Design-Exploration/attachments/11892526?mode=media
+Types icons from https://github.com/duiker101/pokemon-type-svg-icons
+Icons from https://heroicons.com/
+
 ## Features
 
 - Browse a list of Pokémon

@@ -30,7 +30,6 @@ export default defineEventHandler(async (event) => {
 
     return {
       ...pokemonDetails,
-      sprite: pokemonDetails.sprites.other["official-artwork"].front_default,
       abilities,
     };
   } catch (error) {

@@ -14,7 +14,7 @@
     </header>
     <div class="mt-6">
       <PokemonCard :pokemon :showTitle="false" />
-      <div class="tabs flex space-x-4 mt-6 font-semibold overflow-x-scroll">
+      <div class="flex space-x-4 mt-6 font-semibold overflow-x-scroll scrollbar-hide">
         <button v-for="tab in tabs" :key="tab" @click="activeTab = tab"
           :class="[activeTab === tab ? 'text-sky-950 opacity-100' : 'opacity-45']" class="text-lg capitalize">
           {{ tab }}
@@ -26,20 +26,24 @@
           <p><strong>Weight:</strong> {{ pokemon.weight }}</p>
           <p><strong>Base Experience:</strong> {{ pokemon.base_experience }}</p>
         </div>
-        <div v-if="activeTab === 'types'">
-          <ul>
-            <li v-for="type in pokemon.types" :key="type.type.name">{{ type.type.name }}</li>
+        <div v-if="activeTab === 'sprites'">
+          <ul class="grid grid-cols-4 gap-2">
+            <li v-for="sprite in Object.values(pokemon.sprites).filter(s => typeof s === 'string')" :key="sprite">
+              <img :src="sprite" :alt="Object.keys(pokemon.sprites).find(k => pokemon.sprites[k] === sprite)" class="">
+            </li>
           </ul>
         </div>
         <div v-if="activeTab === 'stats'">
           <ul>
-            <li v-for="stat in pokemon.stats" :key="stat.stat.name"><strong class="capitalize">{{ stat.stat.name }}</strong>: {{
+            <li v-for="stat in pokemon.stats" :key="stat.stat.name"><strong class="capitalize">{{ stat.stat.name
+                }}</strong>: {{
               stat.base_stat }}</li>
           </ul>
         </div>
         <div v-if="activeTab === 'abilities'">
           <ul>
-            <li v-for="ability in pokemon.abilities" :key="ability.name"><strong class="capitalize">{{ ability.name }}</strong>: {{
+            <li v-for="ability in pokemon.abilities" :key="ability.name"><strong class="capitalize">{{ ability.name
+                }}</strong>: {{
               ability.description }}</li>
           </ul>
         </div>
@@ -51,6 +55,16 @@
 <script setup>
 const { id } = useRoute().params
 const { data: pokemon } = await useFetch('/api/pokemon/details', { query: { id } })
-const tabs = ['details', 'types', 'stats', 'abilities']
+const tabs = ['abilities', 'details', 'sprites', 'stats' ]
 const activeTab = ref(tabs[0])
 </script>
+
+<style scoped>
+ .scrollbar-hide {
+   -ms-overflow-style: none;  /* Internet Explorer 10+ */
+   scrollbar-width: none;  /* Firefox */
+ }
+ .scrollbar-hide::-webkit-scrollbar {
+   display: none;  /* Safari and Chrome */
+ }
+</style>
