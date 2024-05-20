@@ -1,12 +1,11 @@
 <template>
-  <div ref="container" class="w-full rounded-2xl p-4 text-center shadow-lg">
+  <div ref="container" class="w-full rounded-2xl p-6 text-center shadow-lg" :class="{ 'py-14': !showTitle }">
     <ClientOnly>
-      <img :src="pokemon.sprite" :alt="pokemon.name" class="mx-auto mb-4 w-24 h-24" @load="setBackgroundColor"
-        crossorigin="anonymous">
+      <img :src="pokemon.sprite" :alt="pokemon.name" class="mx-auto" @load="setBackgroundColor" crossorigin="anonymous">
     </ClientOnly>
     <template v-if="showTitle">
-      <h2 class="text-lg font-bold mb-2 capitalize">{{ pokemon.name }}</h2>
-      <p class="text-sm text-gray-500">{{ padNumber(pokemon.id) }}</p>
+      <h2 class="text-lg font-bold mt-2 text-sky-950 capitalize">{{ pokemon.name }}</h2>
+      <p class="text-sm mt-2 text-gray-500">{{ padNumber(pokemon.id) }}</p>
     </template>
   </div>
 </template>
@@ -30,7 +29,7 @@ const { pokemon } = defineProps({
 
 const setBackgroundColor = (event) => {
   fac.getColorAsync(event.target).then(color => {
-    container.value.style.backgroundColor = `rgba(${color.value.slice(0, 3)}, 0.36)`
+    container.value.style.backgroundColor = `rgba(${color.value.slice(0, 3)}, 0.5)`
   })
 };
 
