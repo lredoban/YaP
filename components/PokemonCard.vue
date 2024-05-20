@@ -26,8 +26,8 @@
       </button>
     </div>
     <ul class="absolute bottom-0 left-0 flex gap-2" :class="[showTitle ? 'mb-3 ml-3' : 'mb-4 ml-4']">
-      <li v-for="data in pokemon.types" :key="type">
-          <img :src="`/types/${data.type.name}.svg`" :alt="data.type.name" class="opacity-80" :class="[showTitle ? 'h-3 w-3' : 'h-6 w-6']"/>
+      <li v-for="data in pokemon.types" :key="data.type.name">
+        <img :src="`/types/${data.type.name}.svg`" :alt="data.type.name" class="opacity-80" :class="[showTitle ? 'h-3 w-3' : 'h-6 w-6']"/>
       </li>
     </ul>
   </div>
