@@ -2,6 +2,9 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: ["@nuxtjs/tailwindcss", "@vite-pwa/nuxt", "@nuxt/image"],
+  image: {
+    provider: "netlify",
+  },
   pwa: {
     manifest: {
       name: "Yet Another Pokédex",

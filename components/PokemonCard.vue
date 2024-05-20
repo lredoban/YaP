@@ -2,7 +2,7 @@
   <div ref="container" class="relative w-full rounded-2xl p-6 text-center shadow-lg transition-colors duration-700 bg-gray-200"
     :class="{ 'py-14': !showTitle }">
     <ClientOnly>
-      <NuxtImg :src="sprite" :alt="pokemon.name + shiny && ' shiny'" @load="setBackgroundColor" crossorigin="anonymous"
+      <NuxtImg :src="sprite" :alt="pokemon.name + shiny && ' shiny'" @load="setBackgroundColor" class="mx-auto" crossorigin="anonymous"
         loading="lazy" />
     </ClientOnly>
     <template v-if="showTitle">
