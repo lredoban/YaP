@@ -3,6 +3,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: ["@nuxtjs/tailwindcss", "@vite-pwa/nuxt", "@nuxt/image"],
   image: {
+    provider: "ipx",
     domains: ["raw.githubusercontent.com"],
   },
   pwa: {
