@@ -4,6 +4,7 @@ export default defineNuxtConfig({
   modules: ["@nuxtjs/tailwindcss", "@vite-pwa/nuxt", "@nuxt/image"],
   image: {
     provider: "netlify",
+    domains: ["raw.githubusercontent.com"],
   },
   pwa: {
     manifest: {
