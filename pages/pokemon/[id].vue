@@ -47,13 +47,24 @@
         </div>
       </div>
     </div>
+    <footer class="w-full py-4 mt-6">
+      <nav class="grid grid-cols-2">
+        <NuxtLinkLocale v-if="id != 1" :to="`/pokemon/${id - 1}`" class="hover:underline flex items-center">
+          <ChevronLeftIcon class="mr-1 h-5 w-5"/>{{ $t('id.previous') }}
+        </NuxtLinkLocale>
+        <NuxtLinkLocale v-if="id != maxPokemon" :to="`/pokemon/${id + 1}`" class="hover:underline flex items-center col-start-2 justify-end">
+          {{ $t('id.next') }}<ChevronRightIcon class="ml-1 h-5 w-5"/>
+        </NuxtLinkLocale>
+      </nav>
+    </footer>
   </div>
 </template>
 
 <script setup>
-import { ArrowLeftIcon } from '@heroicons/vue/24/outline'
+import { ArrowLeftIcon, ChevronLeftIcon, ChevronRightIcon } from '@heroicons/vue/24/outline'
+const maxPokemon = useRuntimeConfig().public.maxPokemon;
 
-const { id } = useRoute().params
+const id = +useRoute().params.id
 const { locale } = useI18n()
 const { data: pokemon } = await useFetch('/api/pokemon/details', {
   query: { id }, headers: {

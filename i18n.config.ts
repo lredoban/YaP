@@ -19,6 +19,8 @@ export default {
           weight: "weight",
           baseExperience: "base experience",
         },
+        previous: "previous",
+        next: "next",
       },
     },
     fr: {
@@ -39,6 +41,8 @@ export default {
           weight: "poids",
           baseExperience: "expérience de base",
         },
+        previous: "précédent",
+        next: "suivant",
       },
     },
     es: {
@@ -59,6 +63,8 @@ export default {
           weight: "peso",
           baseExperience: "experiencia base",
         },
+        previous: "anterior",
+        next: "siguiente",
       },
     },
     ko: {
@@ -79,6 +85,8 @@ export default {
           weight: "몸무게",
           baseExperience: "기본 경험치",
         },
+        previous: "이전",
+        next: "다음",
       },
     },
     ja: {
@@ -99,6 +107,8 @@ export default {
           weight: "重さ",
           baseExperience: "基本経験値",
         },
+        previous: "前",
+        next: "次",
       },
     },
     it: {
@@ -119,6 +129,8 @@ export default {
           weight: "peso",
           baseExperience: "esperienza base",
         },
+        previous: "precedente",
+        next: "successivo",
       },
     },
     de: {
@@ -139,6 +151,8 @@ export default {
           weight: "gewicht",
           baseExperience: "grundlegende erfahrung",
         },
+        previous: "vorherige",
+        next: "nächste",
       },
     },
   },

@@ -20,10 +20,14 @@ const getPokemonDetails = async (
 };
 
 export default defineEventHandler(async (event) => {
+  const config = useRuntimeConfig();
   const locale = getHeader(event, "accept-language") ?? "en";
 
   try {
-    const response = await P.getPokemonsList({ limit: 151, offset: 0 });
+    const response = await P.getPokemonsList({
+      limit: Number(config.public.maxPokemon),
+      offset: 0,
+    });
     const pokemons = await Promise.all(
       response.results.map(
         async (pokemon) => await getPokemonDetails(pokemon, locale)

@@ -1,6 +1,10 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  devtools: { enabled: true },
+  runtimeConfig: {
+    public: {
+      maxPokemon: 151,
+    },
+  },
   modules: [
     "@nuxtjs/tailwindcss",
     "@vite-pwa/nuxt",
@@ -112,6 +116,7 @@ export default defineNuxtConfig({
     },
   },
   $development: {
+    devtools: { enabled: true },
     image: {
       provider: "ipx",
     },
