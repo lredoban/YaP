@@ -1,12 +1,9 @@
 <template>
   <div>
     <header class="flex items-start">
-      <NuxtLink to="/" class="inline-block pt-2">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-          class="w-6 h-6">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
-        </svg>
-      </NuxtLink>
+      <NuxtLinkLocale to="/" class="inline-block pt-2">
+        <ArrowLeftIcon class="w-6 h-6" />
+      </NuxtLinkLocale>
       <div class="text-center flex-grow">
         <h1 class="text-2xl font-bold text-sky-950 capitalize">{{ pokemon.name }}</h1>
         <p class="text-sm text-gray-500 font-bold">{{ padNumber(pokemon.id) }}</p>
@@ -17,14 +14,15 @@
       <div class="flex space-x-4 mt-6 font-semibold overflow-x-scroll scrollbar-hide">
         <button v-for="tab in tabs" :key="tab" @click="activeTab = tab"
           :class="[activeTab === tab ? 'text-sky-950 opacity-100' : 'opacity-45']" class="text-lg capitalize">
-          {{ tab }}
+          {{ $t('id.tabs.' + tab) }}
         </button>
       </div>
       <div class="mt-6">
         <div v-if="activeTab === 'details'">
-          <p><strong>Height:</strong> {{ pokemon.height }}</p>
-          <p><strong>Weight:</strong> {{ pokemon.weight }}</p>
-          <p><strong>Base Experience:</strong> {{ pokemon.base_experience }}</p>
+          <p>{{ pokemon.flavor_text }}</p><br>
+          <p><strong class="capitalize">{{ $t('id.details.height') }}:</strong> {{ pokemon.height }}</p>
+          <p><strong class="capitalize">{{ $t('id.details.weight') }}:</strong> {{ pokemon.weight }}</p>
+          <p><strong class="capitalize">{{ $t('id.details.baseExperience') }}:</strong> {{ pokemon.base_experience }}</p>
         </div>
         <div v-if="activeTab === 'sprites'">
           <ul class="grid grid-cols-4 gap-2">
@@ -53,9 +51,16 @@
 </template>
 
 <script setup>
+import { ArrowLeftIcon } from '@heroicons/vue/24/outline'
+
 const { id } = useRoute().params
-const { data: pokemon } = await useFetch('/api/pokemon/details', { query: { id } })
-const tabs = ['abilities', 'details', 'sprites', 'stats' ]
+const { locale } = useI18n()
+const { data: pokemon } = await useFetch('/api/pokemon/details', {
+  query: { id }, headers: {
+    "accept-language": locale
+  }
+})
+const tabs = ['details', 'abilities', 'sprites', 'stats' ]
 const activeTab = ref(tabs[0])
 </script>
 
