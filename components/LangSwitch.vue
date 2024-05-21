@@ -14,9 +14,9 @@
         class="absolute right-0 z-10 mt-2 w-16 text-center origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
         <div class="py-1">
           <MenuItem v-for="{ code, flag } in locales" :key="code" v-slot="{ active }">
-          <SwitchLocalePathLink :locale="code"
-            :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-2xl']">{{ flag }}
-          </SwitchLocalePathLink>
+            <NuxtLink :to="switchLocalePath(code)" external
+              :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-2xl']">{{ flag }}
+            </NuxtLink>
           </MenuItem>
         </div>
       </MenuItems>
@@ -28,6 +28,7 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import { ChevronDownIcon } from '@heroicons/vue/20/solid'
 const { locale, locales } = useI18n()
+const switchLocalePath = useSwitchLocalePath()
 
 const currentLocale = computed(() => {
   return locales.value.find(l => l.code === locale.value)
