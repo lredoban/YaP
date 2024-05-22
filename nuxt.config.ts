@@ -5,6 +5,13 @@ export default defineNuxtConfig({
       maxPokemon: 151,
     },
   },
+  experimental: {
+    defaults: {
+      useAsyncData: {
+        deep: false,
+      },
+    },
+  },
   modules: [
     "@nuxtjs/tailwindcss",
     "@vite-pwa/nuxt",

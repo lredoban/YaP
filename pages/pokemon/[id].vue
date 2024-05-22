@@ -2,7 +2,7 @@
   <div>
     <header class="flex items-start">
       <NuxtLinkLocale to="/" class="inline-block pt-2">
-        <ArrowLeftIcon class="w-6 h-6" />
+        <HomeIcon class="w-6 h-6" />
       </NuxtLinkLocale>
       <div class="text-center flex-grow">
         <h1 class="text-2xl font-bold text-sky-950 capitalize">{{ pokemon.name }}</h1>
@@ -26,8 +26,8 @@
         </div>
         <div v-if="activeTab === 'sprites'">
           <ul class="grid grid-cols-4 gap-2">
-            <li v-for="sprite in Object.values(pokemon.sprites).filter(s => typeof s === 'string')" :key="sprite">
-              <img :src="sprite" :alt="Object.keys(pokemon.sprites).find(k => pokemon.sprites[k] === sprite)" class="">
+            <li v-for="([key, sprite]) in sprites" :key="sprite">
+              <img :src="sprite" :alt="key">
             </li>
           </ul>
         </div>
@@ -52,7 +52,7 @@
         <NuxtLinkLocale v-if="id != 1" :to="`/pokemon/${id - 1}`" class="hover:underline flex items-center">
           <ChevronLeftIcon class="mr-1 h-5 w-5"/>{{ $t('id.previous') }}
         </NuxtLinkLocale>
-        <NuxtLinkLocale v-if="id != maxPokemon" :to="`/pokemon/${id + 1}`" class="hover:underline flex items-center col-start-2 justify-end">
+        <NuxtLinkLocale v-if="id != maxPokemon" :to="`/pokemon/${id + 1}`" prefetch class="hover:underline flex items-center col-start-2 justify-end">
           {{ $t('id.next') }}<ChevronRightIcon class="ml-1 h-5 w-5"/>
         </NuxtLinkLocale>
       </nav>
@@ -61,7 +61,7 @@
 </template>
 
 <script setup>
-import { ArrowLeftIcon, ChevronLeftIcon, ChevronRightIcon } from '@heroicons/vue/24/outline'
+import { ChevronLeftIcon, ChevronRightIcon, HomeIcon } from '@heroicons/vue/24/outline'
 const maxPokemon = useRuntimeConfig().public.maxPokemon;
 
 const id = +useRoute().params.id
@@ -73,6 +73,17 @@ const { data: pokemon } = await useFetch('/api/pokemon/details', {
 })
 const tabs = ['details', 'abilities', 'sprites', 'stats' ]
 const activeTab = ref(tabs[0])
+
+const sprites = computed(() => {
+  const filteredAndSortedSprites = Object.entries(pokemon.value.sprites)
+    .filter(([key, value]) => typeof value === 'string')
+    .sort(([keyA], [keyB]) => {
+      if (keyA.startsWith('f') && !keyB.startsWith('f')) return -1;
+      if (!keyA.startsWith('f') && keyB.startsWith('f')) return 1;
+      return 0;
+    })
+  return filteredAndSortedSprites;
+})
 </script>
 
 <style scoped>

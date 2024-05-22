@@ -3,7 +3,7 @@
     class="relative w-full rounded-2xl p-6 text-center shadow-lg transition-colors duration-700 bg-gray-200"
     :class="{ 'py-14': !showTitle }">
     <ClientOnly>
-      <NuxtImg :src="sprite" :alt="pokemon.name + shiny && ' shiny'" @load="setBackgroundColor" class="mx-auto"
+      <NuxtImg :src="sprite" :alt="pokemon.name + shiny && ' shiny'" @load="onImageLoaded" class="mx-auto"
         crossorigin="anonymous" loading="lazy" />
     </ClientOnly>
     <template v-if="showTitle">
@@ -48,14 +48,23 @@ const { pokemon } = defineProps({
   }
 });
 
+const shinyImage = pokemon.sprites.other["official-artwork"].front_shiny
 const sprite = computed(() => {
-  return shiny.value ? pokemon.sprites.other["official-artwork"].front_shiny : pokemon.sprites.other["official-artwork"].front_default
+  return shiny.value ? shinyImage : pokemon.sprites.other["official-artwork"].front_default
 })
+
 
 const setBackgroundColor = (event) => {
   fac.getColorAsync(event.target).then(color => {
     container.value.style.backgroundColor = `rgba(${color.value.slice(0, 3)}, 0.5)`
   })
 };
+
+const onImageLoaded = (event) => {
+  setBackgroundColor(event);
+  // Preload shinyImg
+  const shinyImg = new Image();
+  shinyImg.src = shinyImage;
+}
 
 </script>
