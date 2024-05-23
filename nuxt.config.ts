@@ -5,6 +5,11 @@ export default defineNuxtConfig({
       maxPokemon: 151,
     },
   },
+  nitro: {
+    prerender: {
+      ignore: ["/.netlify"],
+    },
+  },
   experimental: {
     defaults: {
       useAsyncData: {
