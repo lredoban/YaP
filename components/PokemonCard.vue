@@ -66,13 +66,13 @@ const setBackgroundColor = (target) => {
 
 const onImageLoaded = (event) => {
   setBackgroundColor(event.target);
-  // Preload shinyImg
-  const shinyImg = new Image();
-  shinyImg.src = shinyImage;
 }
 
 onMounted(() => {
   // If load event is not triggered
   if (image.value.$el.complete) setBackgroundColor(image.value.$el)
+  // Preload shinyImg
+  const shinyImg = new Image();
+  shinyImg.src = shinyImage;
 })
 </script>
