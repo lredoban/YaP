@@ -74,6 +74,8 @@ export default defineNuxtConfig({
     ],
   },
   pwa: {
+    registerType: "autoUpdate",
+    injectRegister: false,
     manifest: {
       name: "Yet Another Pokédex",
       short_name: "YaP",
@@ -124,7 +126,20 @@ export default defineNuxtConfig({
       ],
     },
     workbox: {
+      globPatterns: [],
+      cleanupOutdatedCaches: true,
+      clientsClaim: true,
+    },
+    devOptions: {
+      enabled: false,
+      suppressWarnings: true,
       navigateFallback: "/",
+      navigateFallbackAllowlist: [/^\/$/],
+      type: "module",
+    },
+    registerWebManifestInRouteRules: true,
+    client: {
+      installPrompt: true,
     },
   },
   $development: {
