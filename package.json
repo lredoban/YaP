@@ -16,7 +16,6 @@
     "@nuxt/image": "latest",
     "@nuxtjs/i18n": "^8.3.1",
     "@nuxtjs/tailwindcss": "^6.12.0",
-    "@vite-pwa/nuxt": "^0.7.0",
     "fast-average-color": "^9.4.0",
     "nuxt": "^3.11.2",
     "pokedex-promise-v2": "^4.2.0",
