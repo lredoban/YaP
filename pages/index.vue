@@ -12,9 +12,9 @@
     </div>
   </div>
   <ul class="grid grid-cols-2 gap-4 mx-auto mt-8 justify-center">
-    <li v-for="pokemon in filteredPokemons" :key="pokemon.id">
+    <li v-for="(pokemon,i) in filteredPokemons" :key="pokemon.id">
       <NuxtLinkLocale :to="`/pokemon/${pokemon.id}`">
-        <pokemon-card :pokemon="pokemon"></pokemon-card>
+        <pokemon-card :pokemon="pokemon" :preloadImage="i < 16"></pokemon-card>
       </NuxtLinkLocale>
     </li>
   </ul>

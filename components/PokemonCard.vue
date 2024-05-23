@@ -2,10 +2,9 @@
   <div ref="container"
     class="relative w-full rounded-2xl p-6 text-center shadow-lg transition-colors duration-700 bg-gray-200"
     :class="{ 'py-14': !showTitle }">
-    <ClientOnly>
-      <NuxtImg :src="sprite" :alt="pokemon.name + shiny && ' shiny'" @load="onImageLoaded" class="mx-auto"
-        crossorigin="anonymous" loading="lazy" />
-    </ClientOnly>
+    <NuxtImg ref="image" :src="sprite" :alt="pokemon.name + shiny && ' shiny'" @load="onImageLoaded"
+      class="mx-auto aspect-square" width="256" height="256" crossorigin="anonymous" :preload="preloadImage"
+      :loading="preloadImage ? 'eager' : 'lazy'" />
     <template v-if="showTitle">
       <h2 class="text-lg font-bold mt-2 text-sky-950 capitalize">{{ pokemon.name }}</h2>
       <p class="text-sm mt-2 text-gray-500">{{ padNumber(pokemon.id) }}</p>
@@ -34,6 +33,7 @@ import { FastAverageColor } from 'fast-average-color';
 
 const fac = new FastAverageColor();
 const container = ref(null)
+const image = ref(null)
 const cries = ref(null)
 const shiny = ref(false)
 
@@ -45,6 +45,10 @@ const { pokemon } = defineProps({
   showTitle: {
     type: Boolean,
     default: true
+  },
+  preloadImage: {
+    type: Boolean,
+    default: false
   }
 });
 
@@ -54,17 +58,21 @@ const sprite = computed(() => {
 })
 
 
-const setBackgroundColor = (event) => {
-  fac.getColorAsync(event.target).then(color => {
+const setBackgroundColor = (target) => {
+  fac.getColorAsync(target).then(color => {
     container.value.style.backgroundColor = `rgba(${color.value.slice(0, 3)}, 0.5)`
   })
 };
 
 const onImageLoaded = (event) => {
-  setBackgroundColor(event);
+  setBackgroundColor(event.target);
   // Preload shinyImg
   const shinyImg = new Image();
   shinyImg.src = shinyImage;
 }
 
+onMounted(() => {
+  // If load event is not triggered
+  if (image.value.$el.complete) setBackgroundColor(image.value.$el)
+})
 </script>
