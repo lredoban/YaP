@@ -10,7 +10,7 @@
       </div>
     </header>
     <div class="mt-6">
-      <PokemonCard :pokemon :showTitle="false" preloadImage/>
+      <PokemonCard :pokemon :showTitle="false"/>
       <div class="flex space-x-4 mt-6 font-semibold overflow-x-scroll scrollbar-hide">
         <button v-for="tab in tabs" :key="tab" @click="activeTab = tab"
           :class="[activeTab === tab ? 'text-sky-950 opacity-100' : 'opacity-45']" class="text-lg capitalize">

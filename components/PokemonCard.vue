@@ -3,8 +3,8 @@
     class="relative w-full rounded-2xl p-6 text-center shadow-lg transition-colors duration-700 bg-gray-200"
     :class="{ 'py-14': !showTitle }">
     <NuxtImg ref="image" :src="sprite" :alt="pokemon.name + shiny && ' shiny'" @load="onImageLoaded"
-      class="mx-auto aspect-square" width="256" height="256" crossorigin="anonymous" :preload="preloadImage"
-      :loading="preloadImage ? 'eager' : 'lazy'" />
+      class="mx-auto aspect-square" width="256" height="256" crossorigin="anonymous"
+      :loading="lazyload ? 'lazy' : 'eager'" />
     <template v-if="showTitle">
       <h2 class="text-lg font-bold mt-2 text-sky-950 capitalize">{{ pokemon.name }}</h2>
       <p class="text-sm mt-2 text-gray-500">{{ padNumber(pokemon.id) }}</p>
@@ -46,7 +46,7 @@ const { pokemon } = defineProps({
     type: Boolean,
     default: true
   },
-  preloadImage: {
+  lazyload: {
     type: Boolean,
     default: false
   }
