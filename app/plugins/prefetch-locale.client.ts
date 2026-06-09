@@ -16,6 +16,7 @@ export default defineNuxtPlugin(() => {
     const locale = $i18n.locale.value;
     const urls = [
       `/api/pokemon/${locale}/list.json`,
+      `/api/pokemon/${locale}/types.json`,
       ...Array.from(
         { length: maxPokemon },
         (_, i) => `/api/pokemon/${locale}/${i + 1}.json`

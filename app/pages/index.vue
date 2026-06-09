@@ -21,18 +21,20 @@
       </button>
     </div>
     <div v-if="filtersOpen" class="mt-4">
-      <p class="text-xs font-medium uppercase tracking-wider text-gray-400">
+      <!-- Fixed height so the icons row doesn't shift when the selected
+           type name appears or disappears -->
+      <p class="flex items-baseline gap-1.5 h-5 text-xs font-medium uppercase tracking-wider text-gray-400">
         {{ $t('home.filterByType') }}
-        <span v-if="selectedType" class="ml-1 capitalize normal-case tracking-normal text-sm font-semibold text-sky-950">{{ selectedType }}</span>
+        <span v-if="selectedType" class="capitalize normal-case tracking-normal text-sm font-semibold text-sky-950">{{ typeName(selectedType) }}</span>
       </p>
       <ul class="mt-2 flex flex-wrap gap-1.5">
         <li v-for="type in allTypes" :key="type">
-          <button type="button" @click="toggleType(type)" :title="type" :aria-pressed="selectedType === type"
+          <button type="button" @click="toggleType(type)" :title="typeName(type)" :aria-pressed="selectedType === type"
             class="block rounded-full p-1.5 ring-1 transition"
             :class="[selectedType === type ? 'bg-gray-100 ring-gray-600 opacity-100' : 'ring-transparent opacity-40 hover:opacity-75']">
             <!-- The type icons are white, brightness-0 turns them black so
                  they show up on the light background -->
-            <img :src="`/types/${type}.svg`" :alt="type" class="h-4 w-4 brightness-0">
+            <img :src="`/types/${type}.svg`" :alt="typeName(type)" class="h-4 w-4 brightness-0">
           </button>
         </li>
       </ul>
@@ -51,10 +53,14 @@
 import { MagnifyingGlassIcon, FunnelIcon } from '@heroicons/vue/24/outline'
 
 const { locale } = useI18n();
-const { data } = await useFetch(`/api/pokemon/${locale.value}/list.json`)
+const [{ data }, { data: typeNames }] = await Promise.all([
+  useFetch(`/api/pokemon/${locale.value}/list.json`),
+  useFetch(`/api/pokemon/${locale.value}/types.json`),
+])
 const searchQuery = ref('');
 
-const allTypes = ['normal', 'fire', 'water', 'electric', 'grass', 'ice', 'fighting', 'poison', 'ground', 'flying', 'psychic', 'bug', 'rock', 'ghost', 'dragon', 'dark', 'steel', 'fairy']
+const allTypes = pokemonTypes
+const typeName = (type) => typeNames.value?.[type] ?? type
 
 const route = useRoute();
 const router = useRouter();

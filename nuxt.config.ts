@@ -25,6 +25,7 @@ export default defineNuxtConfig({
       // browser, which would 404 on a static host without these files
       routes: localeCodes.flatMap((locale) => [
         `/api/pokemon/${locale}/list.json`,
+        `/api/pokemon/${locale}/types.json`,
         ...Array.from(
           { length: maxPokemon },
           (_, i) => `/api/pokemon/${locale}/${i + 1}.json`
