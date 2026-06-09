@@ -25,6 +25,7 @@ export default {
       },
       offline: {
         cry: "You need to be online to play this sound.",
+        lang: "You need to be online to switch language.",
       },
     },
     fr: {
@@ -51,6 +52,7 @@ export default {
       },
       offline: {
         cry: "Vous devez être connecté pour écouter ce son.",
+        lang: "Vous devez être connecté pour changer de langue.",
       },
     },
     es: {
@@ -77,6 +79,7 @@ export default {
       },
       offline: {
         cry: "Debes estar conectado para escuchar este sonido.",
+        lang: "Debes estar conectado para cambiar de idioma.",
       },
     },
     ko: {
@@ -103,6 +106,7 @@ export default {
       },
       offline: {
         cry: "이 소리를 들으려면 인터넷에 연결되어 있어야 합니다.",
+        lang: "언어를 변경하려면 인터넷에 연결되어 있어야 합니다.",
       },
     },
     ja: {
@@ -129,6 +133,7 @@ export default {
       },
       offline: {
         cry: "この音を再生するにはオンラインである必要があります。",
+        lang: "言語を変更するにはオンラインである必要があります。",
       },
     },
     it: {
@@ -155,6 +160,7 @@ export default {
       },
       offline: {
         cry: "Devi essere online per ascoltare questo suono.",
+        lang: "Devi essere online per cambiare lingua.",
       },
     },
     de: {
@@ -181,6 +187,7 @@ export default {
       },
       offline: {
         cry: "Du musst online sein, um diesen Ton abzuspielen.",
+        lang: "Du musst online sein, um die Sprache zu wechseln.",
       },
     },
   },
