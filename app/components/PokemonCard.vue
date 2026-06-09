@@ -2,9 +2,14 @@
   <div ref="container"
     class="relative w-full rounded-2xl p-6 text-center shadow-lg transition-colors duration-700 bg-gray-200"
     :class="{ 'py-14': !showTitle }">
-    <NuxtImg ref="image" :src="sprite" :alt="pokemon.name + shiny && ' shiny'" @load="onImageLoaded"
+    <NuxtImg v-if="!imageFailed" ref="image" :src="sprite" :alt="pokemon.name + shiny && ' shiny'"
+      @load="onImageLoaded" @error="imageFailed = true"
       class="mx-auto aspect-square" width="256" height="256" crossorigin="anonymous" :preload="preloadImage"
       :loading="preloadImage ? 'eager' : 'lazy'" />
+    <!-- Offline placeholder when the artwork is not cached -->
+    <div v-else class="mx-auto aspect-square w-full max-w-64 flex items-center justify-center">
+      <PokeballIcon class="w-1/3 text-sky-950 opacity-20" />
+    </div>
     <template v-if="showTitle">
       <h2 class="text-lg font-bold mt-2 text-sky-950 capitalize">{{ pokemon.name }}</h2>
       <p class="text-sm mt-2 text-gray-500">{{ padNumber(pokemon.id) }}</p>
@@ -65,10 +70,19 @@ const sprite = computed(() => {
   return shiny.value ? shinyImage : pokemon.sprites.other["official-artwork"].front_default
 })
 
+const online = useOnline()
+
+// Retry (e.g. when toggling shiny or coming back online) instead of being
+// stuck on the placeholder
+const imageFailed = ref(false)
+watch(sprite, () => (imageFailed.value = false))
+watch(online, (isOnline) => {
+  if (isOnline) imageFailed.value = false
+})
+
 // Cries are never downloaded ahead of time: they are fetched (and cached by
 // the service worker) the first time they are played, so offline they are
 // only available if already heard while online.
-const online = useOnline()
 const cryUrl = pokemon.cries?.latest
 const cryCached = ref(false)
 const cryTooltipVisible = ref(false)
@@ -118,7 +132,7 @@ const onImageLoaded = (event) => {
 
 onMounted(async () => {
   // If load event is not triggered
-  if (image.value.$el.complete) setBackgroundColor(image.value.$el)
+  if (image.value?.$el?.complete) setBackgroundColor(image.value.$el)
   if (!showTitle) {
     // Preload shinyImg for the shiny toggle (detail view only)
     const shinyImg = new Image();

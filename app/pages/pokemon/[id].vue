@@ -28,7 +28,12 @@
         <div v-if="activeTab === 'sprites'">
           <ul class="grid grid-cols-4 gap-2">
             <li v-for="([key, sprite]) in sprites" :key="sprite">
-              <img :src="sprite" :alt="key" loading="lazy" width="96" height="96">
+              <img v-if="!failedSprites[sprite]" :src="sprite" :alt="key" :title="key" loading="lazy" width="96"
+                height="96" @error="failedSprites[sprite] = true">
+              <!-- Offline placeholder when the sprite is not cached -->
+              <div v-else :title="key" class="aspect-square flex items-center justify-center">
+                <PokeballIcon class="w-1/3 text-sky-950 opacity-20" />
+              </div>
             </li>
           </ul>
         </div>
@@ -70,6 +75,7 @@ const { locale } = useI18n()
 const { data: pokemon } = await useFetch(`/api/pokemon/${locale.value}/${id}.json`)
 const tabs = ['details', 'abilities', 'sprites', 'stats' ]
 const activeTab = ref(tabs[0])
+const failedSprites = reactive({})
 
 const sprites = computed(() => {
   const filteredAndSortedSprites = Object.entries(pokemon.value.sprites)
