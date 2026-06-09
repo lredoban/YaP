@@ -18,7 +18,9 @@
         <button type="button" @click="toggleType(type)" :title="type" :aria-pressed="selectedType === type"
           class="block rounded-full p-1.5 ring-1 transition"
           :class="[selectedType === type ? 'bg-gray-100 ring-gray-600 opacity-100' : 'ring-transparent opacity-40 hover:opacity-75']">
-          <img :src="`/types/${type}.svg`" :alt="type" class="h-4 w-4">
+          <!-- The type icons are white, brightness-0 turns them black so
+               they show up on the light background -->
+          <img :src="`/types/${type}.svg`" :alt="type" class="h-4 w-4 brightness-0">
         </button>
       </li>
     </ul>
@@ -36,7 +38,7 @@
 import { MagnifyingGlassIcon } from '@heroicons/vue/24/outline'
 
 const { locale } = useI18n();
-const { data } = await useFetch(`/api/pokemon/${locale.value}/list`)
+const { data } = await useFetch(`/api/pokemon/${locale.value}/list.json`)
 const searchQuery = ref('');
 
 const allTypes = ['normal', 'fire', 'water', 'electric', 'grass', 'ice', 'fighting', 'poison', 'ground', 'flying', 'psychic', 'bug', 'rock', 'ghost', 'dragon', 'dark', 'steel', 'fairy']

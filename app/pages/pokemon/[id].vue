@@ -67,7 +67,7 @@ const maxPokemon = useRuntimeConfig().public.maxPokemon;
 
 const id = +useRoute().params.id
 const { locale } = useI18n()
-const { data: pokemon } = await useFetch(`/api/pokemon/${locale.value}/${id}`)
+const { data: pokemon } = await useFetch(`/api/pokemon/${locale.value}/${id}.json`)
 const tabs = ['details', 'abilities', 'sprites', 'stats' ]
 const activeTab = ref(tabs[0])
 

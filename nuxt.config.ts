@@ -1,9 +1,12 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+const maxPokemon = Number(process.env.NUXT_PUBLIC_MAX_POKEMON ?? 151);
+const localeCodes = ["en", "fr", "es", "ko", "ja", "it", "de"];
+
 export default defineNuxtConfig({
   compatibilityDate: "2026-06-01",
   runtimeConfig: {
     public: {
-      maxPokemon: 151,
+      maxPokemon,
     },
   },
   app: {
@@ -17,6 +20,16 @@ export default defineNuxtConfig({
   nitro: {
     prerender: {
       ignore: ["/.netlify"],
+      // Emit the Pokémon API as real static JSON files: client-side
+      // navigations (e.g. the i18n root redirect) re-run useFetch in the
+      // browser, which would 404 on a static host without these files
+      routes: localeCodes.flatMap((locale) => [
+        `/api/pokemon/${locale}/list.json`,
+        ...Array.from(
+          { length: maxPokemon },
+          (_, i) => `/api/pokemon/${locale}/${i + 1}.json`
+        ),
+      ]),
     },
   },
   modules: [
@@ -152,8 +165,19 @@ export default defineNuxtConfig({
           },
         },
         {
-          // Route payloads (Pokémon data) — served instantly from cache,
-          // refreshed in the background
+          // Pokémon data (static JSON API) — served instantly from cache,
+          // refreshed in the background; the prefetch-locale plugin fills
+          // this cache for the current language
+          urlPattern: ({ url }) => url.pathname.startsWith("/api/pokemon/"),
+          handler: "StaleWhileRevalidate",
+          options: {
+            cacheName: "pokemon-data",
+            expiration: { maxEntries: 1300, purgeOnQuotaError: true },
+            cacheableResponse: { statuses: [0, 200] },
+          },
+        },
+        {
+          // Route payloads (client-side navigation priming)
           urlPattern: ({ url }) => url.pathname.endsWith("/_payload.json"),
           handler: "StaleWhileRevalidate",
           options: {

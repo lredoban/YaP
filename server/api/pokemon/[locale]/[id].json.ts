@@ -4,7 +4,13 @@ import getLanguageEntry from "#shared/utils/getLanguageEntry";
 const P = new Pokedex();
 
 export default defineEventHandler(async (event) => {
-  const id = getRouterParam(event, "id");
+  // The route is /api/pokemon/:locale/:id.json — radix3 names the parameter
+  // "id.json" and keeps the extension in its value
+  const id = (
+    getRouterParam(event, "id") ??
+    getRouterParam(event, "id.json") ??
+    ""
+  ).replace(/\.json$/, "");
   // The locale lives in the path (instead of a header) so that each language
   // gets its own URL: required for static generation, where responses are
   // cached and emitted per-URL.

@@ -1,10 +1,10 @@
 /**
  * Makes the Pokédex available offline for the current language only.
  *
- * Once the page is idle, the route payloads of every Pokémon (in the active
- * locale) are prefetched. The service worker picks them up through its
- * runtime cache, so the installed PWA works offline without downloading
- * the data of every language. It also makes client-side navigation instant.
+ * Once the page is idle, the static JSON of every Pokémon (in the active
+ * locale) is prefetched. The service worker picks the responses up through
+ * its "pokemon-data" runtime cache, so the installed PWA works offline
+ * without downloading the data of every language.
  */
 export default defineNuxtPlugin(() => {
   if (import.meta.dev) return;
@@ -13,20 +13,20 @@ export default defineNuxtPlugin(() => {
   const maxPokemon = Number(useRuntimeConfig().public.maxPokemon);
 
   const warmup = async () => {
-    const prefix =
-      $i18n.locale.value === $i18n.defaultLocale ? "" : `/${$i18n.locale.value}`;
-    const routes = [
-      "/",
-      ...Array.from({ length: maxPokemon }, (_, i) => `/pokemon/${i + 1}`),
-    ].map((route) => prefix + route);
+    const locale = $i18n.locale.value;
+    const urls = [
+      `/api/pokemon/${locale}/list.json`,
+      ...Array.from(
+        { length: maxPokemon },
+        (_, i) => `/api/pokemon/${locale}/${i + 1}.json`
+      ),
+    ];
 
     const batchSize = 8;
-    for (let i = 0; i < routes.length; i += batchSize) {
+    for (let i = 0; i < urls.length; i += batchSize) {
       if (!navigator.onLine) return;
       await Promise.all(
-        routes
-          .slice(i, i + batchSize)
-          .map((route) => preloadPayload(route).catch(() => {}))
+        urls.slice(i, i + batchSize).map((url) => fetch(url).catch(() => {}))
       );
     }
   };
@@ -37,7 +37,7 @@ export default defineNuxtPlugin(() => {
       ((cb: () => void) => setTimeout(cb, 2000));
     idle(() => {
       // Wait for the service worker to control the page so the prefetched
-      // payloads land in its runtime cache (with a fallback timeout in case
+      // data lands in its runtime cache (with a fallback timeout in case
       // service workers are unavailable).
       Promise.race([
         navigator.serviceWorker?.ready,
