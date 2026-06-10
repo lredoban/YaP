@@ -6,6 +6,7 @@ export default {
         description:
           "Search for a Pokémon by name or using its National Pokédex number.",
         placeholder: "Name or Number",
+        filterByType: "Filter by type",
       },
       id: {
         tabs: {
@@ -22,12 +23,17 @@ export default {
         previous: "previous",
         next: "next",
       },
+      offline: {
+        cry: "You need to be online to play this sound.",
+        lang: "You need to be online to switch language.",
+      },
     },
     fr: {
       home: {
         description:
           "Recherchez un Pokémon par nom ou en utilisant son numéro de Pokédex National.",
         placeholder: "Nom ou Numéro",
+        filterByType: "Filtrer par type",
       },
       id: {
         tabs: {
@@ -44,12 +50,17 @@ export default {
         previous: "précédent",
         next: "suivant",
       },
+      offline: {
+        cry: "Vous devez être connecté pour écouter ce son.",
+        lang: "Vous devez être connecté pour changer de langue.",
+      },
     },
     es: {
       home: {
         description:
           "Busca un Pokémon por nombre o usando su número de Pokédex Nacional.",
         placeholder: "Nombre o Número",
+        filterByType: "Filtrar por tipo",
       },
       id: {
         tabs: {
@@ -66,12 +77,17 @@ export default {
         previous: "anterior",
         next: "siguiente",
       },
+      offline: {
+        cry: "Debes estar conectado para escuchar este sonido.",
+        lang: "Debes estar conectado para cambiar de idioma.",
+      },
     },
     ko: {
       home: {
         description:
           "이름 또는 전국 포켓몬 도감 번호를 사용하여 포켓몬을 검색하세요.",
         placeholder: "이름 또는 번호",
+        filterByType: "타입으로 필터",
       },
       id: {
         tabs: {
@@ -88,12 +104,17 @@ export default {
         previous: "이전",
         next: "다음",
       },
+      offline: {
+        cry: "이 소리를 들으려면 인터넷에 연결되어 있어야 합니다.",
+        lang: "언어를 변경하려면 인터넷에 연결되어 있어야 합니다.",
+      },
     },
     ja: {
       home: {
         description:
           "名前または全国ポケモン図鑑番号を使用してポケモンを検索します。",
         placeholder: "名前または番号",
+        filterByType: "タイプで絞り込む",
       },
       id: {
         tabs: {
@@ -110,12 +131,17 @@ export default {
         previous: "前",
         next: "次",
       },
+      offline: {
+        cry: "この音を再生するにはオンラインである必要があります。",
+        lang: "言語を変更するにはオンラインである必要があります。",
+      },
     },
     it: {
       home: {
         description:
           "Cerca un Pokémon per nome o utilizzando il suo numero nel Pokédex Nazionale.",
         placeholder: "Nome o Numero",
+        filterByType: "Filtra per tipo",
       },
       id: {
         tabs: {
@@ -132,12 +158,17 @@ export default {
         previous: "precedente",
         next: "successivo",
       },
+      offline: {
+        cry: "Devi essere online per ascoltare questo suono.",
+        lang: "Devi essere online per cambiare lingua.",
+      },
     },
     de: {
       home: {
         description:
           "Suche ein Pokémon nach Namen oder mit seiner Nationalen Pokédex-Nummer.",
         placeholder: "Name oder Nummer",
+        filterByType: "Nach Typ filtern",
       },
       id: {
         tabs: {
@@ -153,6 +184,10 @@ export default {
         },
         previous: "vorherige",
         next: "nächste",
+      },
+      offline: {
+        cry: "Du musst online sein, um diesen Ton abzuspielen.",
+        lang: "Du musst online sein, um die Sprache zu wechseln.",
       },
     },
   },

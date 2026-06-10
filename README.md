@@ -1,6 +1,6 @@
 # Yet Another Pokedex (YaP)
 
-Yet Another Pokedex (YaP) is a simple Pokedex application built with Nuxt 3. This project aims to provide a user-friendly interface to explore and discover various Pokémon, their stats, abilities, and more.
+Yet Another Pokedex (YaP) is a simple Pokedex application built with Nuxt 4. This project aims to provide a user-friendly interface to explore and discover various Pokémon, their stats, abilities, and more.
 
 ## Design
 
@@ -10,13 +10,14 @@ Icons from https://heroicons.com/
 
 ## Features
 
-- Browse a list of Pokémon
+- Browse a list of Pokémon, search by name or number, filter by type
 - View detailed information about each Pokémon
 - Responsive design, compatible with both desktop and mobile devices
+- Installable PWA: works offline in the current language (only the app shell and the active language's data are cached, sounds are cached once played)
 
 ## Stack
 
-- [Nuxt 3](https://nuxt.com/docs/getting-started/introduction)
+- [Nuxt 4](https://nuxt.com/docs/getting-started/introduction)
 - [PokéApi](https://pokeapi.co/) via [pokedex-promise-v2
 ](https://github.com/PokeAPI/pokedex-promise-v2)
 
